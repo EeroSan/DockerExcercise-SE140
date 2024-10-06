@@ -84,11 +84,6 @@ const getSystemInfo = async () => {
         const uptime = getUptime();
         const diskSpace = await getDiskSpace();
         const runningProcesses = await getRunningProcesses();
-        console.log("ipAddress", ipAddress);
-        console.log("uptime", uptime);
-        console.log("diskSpace", diskSpace);
-        console.log("runningProcesses", runningProcesses);
-
         return {
             message: 'Service1 is running',
             ipAddress,
@@ -120,19 +115,16 @@ const getService2Response = async () => {
 };
 
 exports.getResponse = async (req, res) => {
-
-    // res.status(200).send('Service1 is running');
     const sysInfo = await getSystemInfo();
     const sys2Info = await getService2Response();
     res.status(200).json({
-        // message: "Service1 is running",
-        service: {
+        Service: {
             ipAddress: sysInfo.ipAddress,
             uptime: sysInfo.uptime,
             diskSpace: sysInfo.diskSpace,
             runningProcesses: sysInfo.runningProcesses
         },
-        service2: sys2Info
+        Service2: sys2Info
 
     });
     

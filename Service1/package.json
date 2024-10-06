@@ -1,0 +1,15 @@
+{
+    "name": "Service 1",
+    "version": "1.0.0",
+    "description": "",
+    "main": "service1.js",
+    "scripts": {
+      "start": "nodemon src/service1.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "express": "^4.19.2",
+      "nodemon": "^3.1.0"
+    }
+  }

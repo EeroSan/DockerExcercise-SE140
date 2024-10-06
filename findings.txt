@@ -1,0 +1,6 @@
+In my project the services primarily share the network with the host. 
+Some access to filesystem is also shared and the services can see 
+how big the hard drive filesystem is even though it is not mounted. 
+Disk utilization and partition is also exposed.
+Processes running on the host machine are not exposed to the container.
+Uptime does not reveal how long the host has been online.

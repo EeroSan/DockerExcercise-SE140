@@ -1,0 +1,12 @@
+docker container ls
+CONTAINER ID   IMAGE                                 COMMAND                  CREATED         STATUS         PORTS                                       NAMES
+c06d5dc42268   dockerexcercise-se140-main-service2   "python app.py"          4 minutes ago   Up 4 minutes   5000/tcp                                    dockerexcercise-se140-main-service2-1
+7c2895181637   dockerexcercise-se140-main-service1   "docker-entrypoint.s…"   4 minutes ago   Up 4 minutes   0.0.0.0:8199->8199/tcp, :::8199->8199/tcp   dockerexcercise-se140-main-service1-1
+
+docker network ls
+NETWORK ID     NAME                                 DRIVER    SCOPE
+f0ffd3d3b287   bridge                               bridge    local
+383b9cc84a38   dockerexcercise-se140-main_backend   bridge    local
+78753ed45da3   host                                 host      local
+282056d3c2b3   node-docker_default                  bridge    local
+3531b9d0129b   none                                 null      local

@@ -1,0 +1,5 @@
+The used LLM tool: chatgpt and github co-pilot
+Motivation/reason to use LLM: to generate boilerplate code for disk/process methods and to explain things that I have not understood.
+How and why LLM helped: Chatgpt helped by pinpointing an error I had made in the configuration, co-pilot generated code that I could have googled.
+What kind of mistakes LLM did: In this case LLM didn't do any mistakes.
+What were things that LLM was not able to provide: LLM provided things I requested from it.

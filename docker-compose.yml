@@ -10,9 +10,11 @@ services:
   service2:
     build:
       context: ./Service2
+      # expose:
+      #   - "5000"
     # command: python manage.py runserver 0.0.0.0:8000
-    ports: 
-      - 8200:8200
+    # ports: 
+    #   - 5000:5000
     networks:
       - backend
     depends_on:

@@ -1,7 +1,11 @@
-FROM python:3
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV PYTHONUNBUFFERED=1
-WORKDIR /src
-COPY requirements.txt /src/
-RUN pip install -r requirements.txt
-COPY . /src/
+FROM python:3.9-slim
+
+WORKDIR /app
+COPY . /app
+RUN pip install flask psutil
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Run app.py when the container launches
+CMD ["python", "app.py"]

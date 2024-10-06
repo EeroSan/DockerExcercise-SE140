@@ -1,4 +1,6 @@
 const os = require('os');
+const fs = require('fs');
+const path = require('path');
 const { exec } = require('child_process');
 
 const getIpAddress = () => {
@@ -15,16 +17,37 @@ const getIpAddress = () => {
 
 const getRunningProcesses = () => {
     return new Promise((resolve, reject) => {
-        exec('ps -aux', (error, stdout, stderr) => {
-            if (error) {
+        const procDir = '/proc';
+        let processes = [];
+
+        // Read the contents of the /proc directory
+        fs.readdir(procDir, (err, files) => {
+            if (err) {
                 resolve('No process found');
                 return;
             }
-            if (stderr) {
+
+            // Filter numeric directories (these correspond to process IDs)
+            const pidDirs = files.filter((file) => /^\d+$/.test(file));
+
+            // For each process, read the cmdline file for process information
+            pidDirs.forEach((pid) => {
+                const cmdPath = path.join(procDir, pid, 'cmdline');
+                try {
+                    const cmdline = fs.readFileSync(cmdPath, 'utf-8');
+                    if (cmdline) {
+                        processes.push(`PID: ${pid}, Command: ${cmdline.replace(/\0/g, ' ')}`);
+                    }
+                } catch (err) {
+                    // Skip if we can't read the file
+                }
+            });
+
+            if (processes.length === 0) {
                 resolve('No process found');
-                return;
+            } else {
+                resolve(processes.join('\n'));
             }
-            resolve(stdout);
         });
     });
 };
@@ -82,18 +105,34 @@ const getSystemInfo = async () => {
     }
 };
 
+const getService2Response = async () => {
+    try {
+        const response = await fetch('http://service2:5000');
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error:', error.message);
+        return {
+            message: 'Error retrieving response from Service2',
+            error: error.message
+        };
+    }
+};
+
 exports.getResponse = async (req, res) => {
 
     // res.status(200).send('Service1 is running');
     const sysInfo = await getSystemInfo();
+    const sys2Info = await getService2Response();
     res.status(200).json({
-        message: "Service1 is running",
-        data: {
+        // message: "Service1 is running",
+        service: {
             ipAddress: sysInfo.ipAddress,
             uptime: sysInfo.uptime,
             diskSpace: sysInfo.diskSpace,
             runningProcesses: sysInfo.runningProcesses
-        }
+        },
+        service2: sys2Info
 
     });
     
